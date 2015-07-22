@@ -47,8 +47,9 @@ namespace SemanticColorizer
         private IClassificationType typeSpecialType;
         private IClassificationType typeNormalType;
         private Cache cache;
-
+#pragma warning disable CS0067
         public event EventHandler<SnapshotSpanEventArgs> TagsChanged;
+#pragma warning restore CS0067
 
         internal SemanticColorizer(ITextBuffer buffer, IClassificationTypeRegistryService registry) {
             theBuffer = buffer;
