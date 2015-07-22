@@ -1,5 +1,5 @@
 
-2015-07-22 V1.1.1 Added License
+2015-07-22 V1.1.2 Added License
 * Added Apache license
 * Added ReleaseNotes
 * No changes
