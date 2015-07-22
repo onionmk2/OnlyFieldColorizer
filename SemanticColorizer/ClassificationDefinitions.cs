@@ -2,7 +2,7 @@
 using Microsoft.VisualStudio.Text.Classification;
 using Microsoft.VisualStudio.Utilities;
 
-namespace RoslynColorizer
+namespace SemanticColorizer
 {
     internal static class ClassificationTypes
     {

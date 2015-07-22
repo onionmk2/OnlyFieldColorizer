@@ -4,7 +4,7 @@ using Microsoft.VisualStudio.Text.Classification;
 using Microsoft.VisualStudio.Text.Tagging;
 using System;
 
-namespace RoslynColorizer {
+namespace SemanticColorizer {
   public static class Extensions {
     public static ITagSpan<IClassificationTag> ToTagSpan(this TextSpan span, ITextSnapshot snapshot, IClassificationType classificationType) {
       return new TagSpan<IClassificationTag>(

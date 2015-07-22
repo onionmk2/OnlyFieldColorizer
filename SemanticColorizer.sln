@@ -8,7 +8,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = ".paket", ".paket", "{3838DC
 		paket.dependencies = paket.dependencies
 	EndProjectSection
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RoslynColorizer", "RoslynColorizer\RoslynColorizer.csproj", "{1EC486EE-EE95-4159-A186-84EDF5B2EC29}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SemanticColorizer", "SemanticColorizer\SemanticColorizer.csproj", "{1EC486EE-EE95-4159-A186-84EDF5B2EC29}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{DC7EA05A-4257-47E3-A403-D080B0DE096D}"
 	ProjectSection(SolutionItems) = preProject

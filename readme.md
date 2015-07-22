@@ -1,6 +1,8 @@
-# Visual Studio 2015 Roslyn Tagger
+# Semantic Syntax Colorizer
 
-This is an editor extension for Visual Studio 2015 that uses the Roslyn APIs to highlight the following syntax types in distinctive colors to make them easily recognizable.
+A Visual Studio 2015 editor extension for semantic syntax highlighting.
+
+It uses the Roslyn APIs to highlight the following syntax types in distinctive colors to make them easily recognizable.
 
 * Class fields
 * Enum fields
@@ -17,4 +19,4 @@ This is an editor extension for Visual Studio 2015 that uses the Roslyn APIs to 
 
 The code is fairly simple, but it is not currently written using the Async APIs in Roslyn.
 
-This extension is based on the VS2015 RTM.
+This extension works for the first final version of Visual Studio 2015.

@@ -13,24 +13,24 @@ using System.Threading.Tasks;
 using CSharp = Microsoft.CodeAnalysis.CSharp;
 using VB = Microsoft.CodeAnalysis.VisualBasic;
 
-namespace RoslynColorizer
+namespace SemanticColorizer
 {
 
     [Export(typeof(ITaggerProvider))]
     [ContentType("CSharp")]
     [ContentType("Basic")]
     [TagType(typeof(IClassificationTag))]
-    internal class RoslynColorizerProvider : ITaggerProvider
+    internal class SemanticColorizerProvider : ITaggerProvider
     {
         [Import]
         internal IClassificationTypeRegistryService ClassificationRegistry = null; // Set via MEF
 
         public ITagger<T> CreateTagger<T>(ITextBuffer buffer) where T : ITag {
-            return (ITagger<T>)new RoslynColorizer(buffer, ClassificationRegistry);
+            return (ITagger<T>)new SemanticColorizer(buffer, ClassificationRegistry);
         }
     }
 
-    class RoslynColorizer : ITagger<IClassificationTag>
+    class SemanticColorizer : ITagger<IClassificationTag>
     {
         private ITextBuffer theBuffer;
         private IClassificationType fieldType;
@@ -46,11 +46,11 @@ namespace RoslynColorizer
         private IClassificationType localType;
         private IClassificationType typeSpecialType;
         private IClassificationType typeNormalType;
-        private RoslynDocument cache;
+        private Cache cache;
 
         public event EventHandler<SnapshotSpanEventArgs> TagsChanged;
 
-        internal RoslynColorizer(ITextBuffer buffer, IClassificationTypeRegistryService registry) {
+        internal SemanticColorizer(ITextBuffer buffer, IClassificationTypeRegistryService registry) {
             theBuffer = buffer;
             fieldType = registry.GetClassificationType(Constants.FieldFormat);
             enumFieldType = registry.GetClassificationType(Constants.EnumFieldFormat);
@@ -75,7 +75,7 @@ namespace RoslynColorizer
                 // this makes me feel dirty, but otherwise it will not
                 // work reliably, as TryGetSemanticModel() often will return false
                 // should make this into a completely async process somehow
-                var task = RoslynDocument.Resolve(theBuffer, spans[0].Snapshot);
+                var task = Cache.Resolve(theBuffer, spans[0].Snapshot);
                 task.Wait();
                 if (task.IsFaulted) {
                     // TODO: report this to someone.
@@ -87,7 +87,7 @@ namespace RoslynColorizer
         }
 
         private IEnumerable<ITagSpan<IClassificationTag>> GetTagsImpl(
-              RoslynDocument doc,
+              Cache doc,
               NormalizedSnapshotSpanCollection spans) {
             var snapshot = spans[0].Snapshot;
 
@@ -186,7 +186,7 @@ namespace RoslynColorizer
                    select cs;
         }
 
-        public class RoslynDocument
+        private class Cache
         {
             public Workspace Workspace { get; private set; }
             public Document Document { get; private set; }
@@ -194,17 +194,16 @@ namespace RoslynColorizer
             public SyntaxNode SyntaxRoot { get; private set; }
             public ITextSnapshot Snapshot { get; private set; }
 
-            private RoslynDocument() {
-            }
+            private Cache() {}
 
-            public static async Task<RoslynDocument> Resolve(ITextBuffer buffer, ITextSnapshot snapshot) {
+            public static async Task<Cache> Resolve(ITextBuffer buffer, ITextSnapshot snapshot) {
                 var workspace = buffer.GetWorkspace();
                 var document = snapshot.GetOpenDocumentInCurrentContextWithChanges();
                 // the ConfigureAwait() calls are important,
                 // otherwise we'll deadlock VS
                 var semanticModel = await document.GetSemanticModelAsync().ConfigureAwait(false);
                 var syntaxRoot = await document.GetSyntaxRootAsync().ConfigureAwait(false);
-                return new RoslynDocument {
+                return new Cache {
                     Workspace = workspace,
                     Document = document,
                     SemanticModel = semanticModel,

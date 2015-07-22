@@ -3,17 +3,17 @@ using System.Windows.Media;
 using Microsoft.VisualStudio.Text.Classification;
 using Microsoft.VisualStudio.Utilities;
 
-namespace RoslynColorizer
+namespace SemanticColorizer
 {
     [Export(typeof(EditorFormatDefinition))]
     [ClassificationType(ClassificationTypeNames = Constants.FieldFormat)]
     [Name(Constants.FieldFormat)]
     [UserVisible(true)]
     [Order(After = Priority.Default)]
-    internal sealed class RoslynFieldFormat : ClassificationFormatDefinition
+    internal sealed class SemanticFieldFormat : ClassificationFormatDefinition
     {
-        public RoslynFieldFormat() {
-            this.DisplayName = "Roslyn Field";
+        public SemanticFieldFormat() {
+            this.DisplayName = "Semantic Field";
             this.ForegroundColor = Colors.SaddleBrown;
         }
     }
@@ -23,10 +23,10 @@ namespace RoslynColorizer
     [Name(Constants.EnumFieldFormat)]
     [UserVisible(true)]
     [Order(After = Priority.Default)]
-    internal sealed class RoslynEnumFieldFormat : ClassificationFormatDefinition
+    internal sealed class SemanticEnumFieldFormat : ClassificationFormatDefinition
     {
-        public RoslynEnumFieldFormat() {
-            this.DisplayName = "Roslyn Enum Field";
+        public SemanticEnumFieldFormat() {
+            this.DisplayName = "Semantic Enum Field";
         }
     }
 
@@ -35,10 +35,10 @@ namespace RoslynColorizer
     [Name(Constants.ExtensionMethodFormat)]
     [UserVisible(true)]
     [Order(After = Priority.Default)]
-    internal sealed class RoslynExtensionMethodFormat : ClassificationFormatDefinition
+    internal sealed class SemanticExtensionMethodFormat : ClassificationFormatDefinition
     {
-        public RoslynExtensionMethodFormat() {
-            this.DisplayName = "Roslyn Extension Method";
+        public SemanticExtensionMethodFormat() {
+            this.DisplayName = "Semantic Extension Method";
             this.IsItalic = true;
         }
     }
@@ -48,10 +48,10 @@ namespace RoslynColorizer
     [Name(Constants.StaticMethodFormat)]
     [UserVisible(true)]
     [Order(After = Priority.Default)]
-    internal sealed class RoslynStaticMethodFormat : ClassificationFormatDefinition
+    internal sealed class SemanticStaticMethodFormat : ClassificationFormatDefinition
     {
-        public RoslynStaticMethodFormat() {
-            this.DisplayName = "Roslyn Static Method";
+        public SemanticStaticMethodFormat() {
+            this.DisplayName = "Semantic Static Method";
         }
     }
 
@@ -60,10 +60,10 @@ namespace RoslynColorizer
     [Name(Constants.NormalMethodFormat)]
     [UserVisible(true)]
     [Order(After = Priority.Default)]
-    internal sealed class RoslynNormalMethodFormat : ClassificationFormatDefinition
+    internal sealed class SemanticNormalMethodFormat : ClassificationFormatDefinition
     {
-        public RoslynNormalMethodFormat() {
-            this.DisplayName = "Roslyn Normal Method";
+        public SemanticNormalMethodFormat() {
+            this.DisplayName = "Semantic Normal Method";
         }
     }
 
@@ -72,10 +72,10 @@ namespace RoslynColorizer
     [Name(Constants.ConstructorFormat)]
     [UserVisible(true)]
     [Order(After = Priority.Default)]
-    internal sealed class RoslynConstructorFormat : ClassificationFormatDefinition
+    internal sealed class SemanticConstructorFormat : ClassificationFormatDefinition
     {
-        public RoslynConstructorFormat() {
-            this.DisplayName = "Roslyn Constructor";
+        public SemanticConstructorFormat() {
+            this.DisplayName = "Semantic Constructor";
         }
     }
 
@@ -84,10 +84,10 @@ namespace RoslynColorizer
     [Name(Constants.TypeParameterFormat)]
     [UserVisible(true)]
     [Order(After = Priority.Default)]
-    internal sealed class RoslynTypeParameterFormat : ClassificationFormatDefinition
+    internal sealed class SemanticTypeParameterFormat : ClassificationFormatDefinition
     {
-        public RoslynTypeParameterFormat() {
-            this.DisplayName = "Roslyn Type Parameter";
+        public SemanticTypeParameterFormat() {
+            this.DisplayName = "Semantic Type Parameter";
             this.ForegroundColor = Colors.SlateGray;
         }
     }
@@ -97,10 +97,10 @@ namespace RoslynColorizer
     [Name(Constants.ParameterFormat)]
     [UserVisible(true)]
     [Order(After = Priority.Default)]
-    internal sealed class RoslynParameterFormat : ClassificationFormatDefinition
+    internal sealed class SemanticParameterFormat : ClassificationFormatDefinition
     {
-        public RoslynParameterFormat() {
-            this.DisplayName = "Roslyn Parameter";
+        public SemanticParameterFormat() {
+            this.DisplayName = "Semantic Parameter";
             this.ForegroundColor = Colors.SlateGray;
         }
     }
@@ -110,10 +110,10 @@ namespace RoslynColorizer
     [Name(Constants.NamespaceFormat)]
     [UserVisible(true)]
     [Order(After = Priority.Default)]
-    internal sealed class RoslynNamespaceFormat : ClassificationFormatDefinition
+    internal sealed class SemanticNamespaceFormat : ClassificationFormatDefinition
     {
-        public RoslynNamespaceFormat() {
-            this.DisplayName = "Roslyn Namespace";
+        public SemanticNamespaceFormat() {
+            this.DisplayName = "Semantic Namespace";
             this.ForegroundColor = Colors.LimeGreen;
         }
     }
@@ -123,10 +123,10 @@ namespace RoslynColorizer
     [Name(Constants.PropertyFormat)]
     [UserVisible(true)]
     [Order(After = Priority.Default)]
-    internal sealed class RoslynPropertyFormat : ClassificationFormatDefinition
+    internal sealed class SemanticPropertyFormat : ClassificationFormatDefinition
     {
-        public RoslynPropertyFormat() {
-            this.DisplayName = "Roslyn Property";
+        public SemanticPropertyFormat() {
+            this.DisplayName = "Semantic Property";
         }
     }
 
@@ -135,10 +135,10 @@ namespace RoslynColorizer
     [Name(Constants.LocalFormat)]
     [UserVisible(true)]
     [Order(After = Priority.Default)]
-    internal sealed class RoslynLocalFormat : ClassificationFormatDefinition
+    internal sealed class SemanticLocalFormat : ClassificationFormatDefinition
     {
-        public RoslynLocalFormat() {
-            this.DisplayName = "Roslyn Local";
+        public SemanticLocalFormat() {
+            this.DisplayName = "Semantic Local";
         }
     }
 
@@ -147,10 +147,10 @@ namespace RoslynColorizer
     [Name(Constants.TypeSpecialFormat)]
     [UserVisible(true)]
     [Order(After = Priority.Default)]
-    internal sealed class RoslynTypeSpecialFormat : ClassificationFormatDefinition
+    internal sealed class SemanticTypeSpecialFormat : ClassificationFormatDefinition
     {
-        public RoslynTypeSpecialFormat() {
-            this.DisplayName = "Roslyn Special Type";
+        public SemanticTypeSpecialFormat() {
+            this.DisplayName = "Semantic Special Type";
         }
     }
 
@@ -159,10 +159,10 @@ namespace RoslynColorizer
     [Name(Constants.TypeNormalFormat)]
     [UserVisible(true)]
     [Order(After = Priority.Default)]
-    internal sealed class RoslynTypeNormalFormat : ClassificationFormatDefinition
+    internal sealed class SemanticTypeNormalFormat : ClassificationFormatDefinition
     {
-        public RoslynTypeNormalFormat() {
-            this.DisplayName = "Roslyn Normal Type";
+        public SemanticTypeNormalFormat() {
+            this.DisplayName = "Semantic Normal Type";
         }
     }
 }
