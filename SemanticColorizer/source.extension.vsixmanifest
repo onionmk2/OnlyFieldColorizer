@@ -6,6 +6,7 @@
     <Description xml:space="preserve">A semantic syntax classifier extension based on Roslyn for C# and Visual Basic.</Description>
     <MoreInfo>https://github.com/hicknhack-software/semantic-colorizer</MoreInfo>
     <License>LICENSE.txt</License>
+    <ReleaseNotes>ReleaseNotes.txt</ReleaseNotes>
     <Icon>rainbow.png</Icon>
     <PreviewImage>SemanticColorizerExample.png</PreviewImage>
     <Tags>Semantic Syntax Highlighting Color</Tags>
