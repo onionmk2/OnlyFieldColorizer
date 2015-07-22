@@ -1,0 +1,19 @@
+
+2015-07-22 V1.1.1 Added License
+* Added Apache license
+* Added ReleaseNotes
+* No changes
+
+2015-07-22 V1.1.0 First Release
+* Class fields
+* Enum fields
+* Static methods
+* Regular methods
+* Constructors
+* Type parameters
+* Parameters
+* Namespaces
+* Class properties
+* Local variables
+* Special types (built in)
+* Normal types
