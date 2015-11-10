@@ -77,12 +77,21 @@ namespace SemanticColorizer
                 // work reliably, as TryGetSemanticModel() often will return false
                 // should make this into a completely async process somehow
                 var task = Cache.Resolve(theBuffer, spans[0].Snapshot);
-                task.Wait();
-                if (task.IsFaulted) {
+                try
+                {
+                    task.Wait();
+                }
+                catch (Exception)
+                {
                     // TODO: report this to someone.
                     return Enumerable.Empty<ITagSpan<IClassificationTag>>();
                 }
                 cache = task.Result;
+                if( cache == null)
+                {
+                    // TODO: report this to someone.
+                    return Enumerable.Empty<ITagSpan<IClassificationTag>>();
+                }
             }
             return GetTagsImpl(this.cache, spans);
         }
@@ -200,6 +209,12 @@ namespace SemanticColorizer
             public static async Task<Cache> Resolve(ITextBuffer buffer, ITextSnapshot snapshot) {
                 var workspace = buffer.GetWorkspace();
                 var document = snapshot.GetOpenDocumentInCurrentContextWithChanges();
+                if (document == null)
+                {
+                    // Razor cshtml returns a null document for some reason.
+                    return null;
+                }
+
                 // the ConfigureAwait() calls are important,
                 // otherwise we'll deadlock VS
                 var semanticModel = await document.GetSemanticModelAsync().ConfigureAwait(false);
