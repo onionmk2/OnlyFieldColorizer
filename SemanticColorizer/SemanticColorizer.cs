@@ -23,7 +23,7 @@ namespace SemanticColorizer
     internal class SemanticColorizerProvider : ITaggerProvider
     {
         [Import]
-        internal IClassificationTypeRegistryService ClassificationRegistry = null; // Set via MEF
+        internal IClassificationTypeRegistryService ClassificationRegistry; // Set via MEF
 
         public ITagger<T> CreateTagger<T>(ITextBuffer buffer) where T : ITag {
             return (ITagger<T>)new SemanticColorizer(buffer, ClassificationRegistry);
@@ -32,51 +32,51 @@ namespace SemanticColorizer
 
     class SemanticColorizer : ITagger<IClassificationTag>
     {
-        private ITextBuffer theBuffer;
-        private IClassificationType fieldType;
-        private IClassificationType enumFieldType;
-        private IClassificationType extensionMethodType;
-        private IClassificationType staticMethodType;
-        private IClassificationType normalMethodType;
-        private IClassificationType constructorType;
-        private IClassificationType typeParameterType;
-        private IClassificationType parameterType;
-        private IClassificationType namespaceType;
-        private IClassificationType propertyType;
-        private IClassificationType localType;
-        private IClassificationType typeSpecialType;
-        private IClassificationType typeNormalType;
-        private Cache cache;
+        private readonly ITextBuffer _theBuffer;
+        private readonly IClassificationType _fieldType;
+        private readonly IClassificationType _enumFieldType;
+        private readonly IClassificationType _extensionMethodType;
+        private readonly IClassificationType _staticMethodType;
+        private readonly IClassificationType _normalMethodType;
+        private IClassificationType _constructorType;
+        private readonly IClassificationType _typeParameterType;
+        private readonly IClassificationType _parameterType;
+        private readonly IClassificationType _namespaceType;
+        private readonly IClassificationType _propertyType;
+        private readonly IClassificationType _localType;
+        private readonly IClassificationType _typeSpecialType;
+        private readonly IClassificationType _typeNormalType;
+        private Cache _cache;
 #pragma warning disable CS0067
         public event EventHandler<SnapshotSpanEventArgs> TagsChanged;
 #pragma warning restore CS0067
 
         internal SemanticColorizer(ITextBuffer buffer, IClassificationTypeRegistryService registry) {
-            theBuffer = buffer;
-            fieldType = registry.GetClassificationType(Constants.FieldFormat);
-            enumFieldType = registry.GetClassificationType(Constants.EnumFieldFormat);
-            extensionMethodType = registry.GetClassificationType(Constants.ExtensionMethodFormat);
-            staticMethodType = registry.GetClassificationType(Constants.StaticMethodFormat);
-            normalMethodType = registry.GetClassificationType(Constants.NormalMethodFormat);
-            constructorType = registry.GetClassificationType(Constants.ConstructorFormat);
-            typeParameterType = registry.GetClassificationType(Constants.TypeParameterFormat);
-            parameterType = registry.GetClassificationType(Constants.ParameterFormat);
-            namespaceType = registry.GetClassificationType(Constants.NamespaceFormat);
-            propertyType = registry.GetClassificationType(Constants.PropertyFormat);
-            localType = registry.GetClassificationType(Constants.LocalFormat);
-            typeSpecialType = registry.GetClassificationType(Constants.TypeSpecialFormat);
-            typeNormalType = registry.GetClassificationType(Constants.TypeNormalFormat);
+            _theBuffer = buffer;
+            _fieldType = registry.GetClassificationType(Constants.FieldFormat);
+            _enumFieldType = registry.GetClassificationType(Constants.EnumFieldFormat);
+            _extensionMethodType = registry.GetClassificationType(Constants.ExtensionMethodFormat);
+            _staticMethodType = registry.GetClassificationType(Constants.StaticMethodFormat);
+            _normalMethodType = registry.GetClassificationType(Constants.NormalMethodFormat);
+            _constructorType = registry.GetClassificationType(Constants.ConstructorFormat);
+            _typeParameterType = registry.GetClassificationType(Constants.TypeParameterFormat);
+            _parameterType = registry.GetClassificationType(Constants.ParameterFormat);
+            _namespaceType = registry.GetClassificationType(Constants.NamespaceFormat);
+            _propertyType = registry.GetClassificationType(Constants.PropertyFormat);
+            _localType = registry.GetClassificationType(Constants.LocalFormat);
+            _typeSpecialType = registry.GetClassificationType(Constants.TypeSpecialFormat);
+            _typeNormalType = registry.GetClassificationType(Constants.TypeNormalFormat);
         }
 
         public IEnumerable<ITagSpan<IClassificationTag>> GetTags(NormalizedSnapshotSpanCollection spans) {
             if (spans.Count == 0) {
                 return Enumerable.Empty<ITagSpan<IClassificationTag>>();
             }
-            if (this.cache == null || this.cache.Snapshot != spans[0].Snapshot) {
+            if (_cache == null || _cache.Snapshot != spans[0].Snapshot) {
                 // this makes me feel dirty, but otherwise it will not
                 // work reliably, as TryGetSemanticModel() often will return false
                 // should make this into a completely async process somehow
-                var task = Cache.Resolve(theBuffer, spans[0].Snapshot);
+                var task = Cache.Resolve(_theBuffer, spans[0].Snapshot);
                 try
                 {
                     task.Wait();
@@ -86,14 +86,14 @@ namespace SemanticColorizer
                     // TODO: report this to someone.
                     return Enumerable.Empty<ITagSpan<IClassificationTag>>();
                 }
-                cache = task.Result;
-                if( cache == null)
+                _cache = task.Result;
+                if( _cache == null)
                 {
                     // TODO: report this to someone.
                     return Enumerable.Empty<ITagSpan<IClassificationTag>>();
                 }
             }
-            return GetTagsImpl(this.cache, spans);
+            return GetTagsImpl(_cache, spans);
         }
 
         private IEnumerable<ITagSpan<IClassificationTag>> GetTagsImpl(
@@ -114,51 +114,51 @@ namespace SemanticColorizer
                 switch (symbol.Kind) {
                     case SymbolKind.Field:
                         if (symbol.ContainingType.TypeKind != TypeKind.Enum) {
-                            yield return id.TextSpan.ToTagSpan(snapshot, fieldType);
+                            yield return id.TextSpan.ToTagSpan(snapshot, _fieldType);
                         }
                         else {
-                            yield return id.TextSpan.ToTagSpan(snapshot, enumFieldType);
+                            yield return id.TextSpan.ToTagSpan(snapshot, _enumFieldType);
                         }
                         break;
                     case SymbolKind.Method:
                         if (IsExtensionMethod(symbol)) {
-                            yield return id.TextSpan.ToTagSpan(snapshot, extensionMethodType);
+                            yield return id.TextSpan.ToTagSpan(snapshot, _extensionMethodType);
                         }
                         else if (symbol.IsStatic) {
-                            yield return id.TextSpan.ToTagSpan(snapshot, staticMethodType);
+                            yield return id.TextSpan.ToTagSpan(snapshot, _staticMethodType);
                         }
                         else {
-                            yield return id.TextSpan.ToTagSpan(snapshot, normalMethodType);
+                            yield return id.TextSpan.ToTagSpan(snapshot, _normalMethodType);
                         }
                         break;
                     case SymbolKind.TypeParameter:
-                        yield return id.TextSpan.ToTagSpan(snapshot, typeParameterType);
+                        yield return id.TextSpan.ToTagSpan(snapshot, _typeParameterType);
                         break;
                     case SymbolKind.Parameter:
-                        yield return id.TextSpan.ToTagSpan(snapshot, parameterType);
+                        yield return id.TextSpan.ToTagSpan(snapshot, _parameterType);
                         break;
                     case SymbolKind.Namespace:
-                        yield return id.TextSpan.ToTagSpan(snapshot, namespaceType);
+                        yield return id.TextSpan.ToTagSpan(snapshot, _namespaceType);
                         break;
                     case SymbolKind.Property:
-                        yield return id.TextSpan.ToTagSpan(snapshot, propertyType);
+                        yield return id.TextSpan.ToTagSpan(snapshot, _propertyType);
                         break;
                     case SymbolKind.Local:
-                        yield return id.TextSpan.ToTagSpan(snapshot, localType);
+                        yield return id.TextSpan.ToTagSpan(snapshot, _localType);
                         break;
                     case SymbolKind.NamedType:
-                        if (isSpecialType(symbol)) {
-                            yield return id.TextSpan.ToTagSpan(snapshot, typeSpecialType);
+                        if (IsSpecialType(symbol)) {
+                            yield return id.TextSpan.ToTagSpan(snapshot, _typeSpecialType);
                         }
                         else {
-                            yield return id.TextSpan.ToTagSpan(snapshot, typeNormalType);
+                            yield return id.TextSpan.ToTagSpan(snapshot, _typeNormalType);
                         }
                         break;
                 }
             }
         }
 
-        private bool isSpecialType(ISymbol symbol) {
+        private bool IsSpecialType(ISymbol symbol) {
             var type = (INamedTypeSymbol)symbol;
             return type.SpecialType != SpecialType.None;
         }
@@ -175,7 +175,7 @@ namespace SemanticColorizer
             else if (node.CSharpKind() == CSharp.SyntaxKind.AttributeArgument) {
                 return ((CSharp.Syntax.AttributeArgumentSyntax)node).Expression;
             }
-            else if (node.VBKind() == VB.SyntaxKind.SimpleArgument) {
+            else if (node.VbKind() == VB.SyntaxKind.SimpleArgument) {
                 return ((VB.Syntax.SimpleArgumentSyntax)node).Expression;
             }
             return node;
