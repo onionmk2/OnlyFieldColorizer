@@ -1,6 +1,0 @@
-source https://api.nuget.org/v3/index.json
-source https://www.nuget.org/api/v2/
-framework >= net45
-
-nuget Microsoft.CodeAnalysis 1.0.0
-nuget Microsoft.CodeAnalysis.EditorFeatures.Text 1.0.0

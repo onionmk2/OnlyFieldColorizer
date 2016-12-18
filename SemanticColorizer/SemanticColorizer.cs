@@ -22,8 +22,10 @@ namespace SemanticColorizer
     [TagType(typeof(IClassificationTag))]
     internal class SemanticColorizerProvider : ITaggerProvider
     {
+#pragma warning disable CS0649
         [Import]
         internal IClassificationTypeRegistryService ClassificationRegistry; // Set via MEF
+#pragma warning restore CS0649
 
         public ITagger<T> CreateTagger<T>(ITextBuffer buffer) where T : ITag {
             return (ITagger<T>)new SemanticColorizer(buffer, ClassificationRegistry);

@@ -6,6 +6,7 @@ namespace SemanticColorizer
 {
     internal static class ClassificationTypes
     {
+#pragma warning disable CS0649
         [Export(typeof(ClassificationTypeDefinition))]
         [Name(Constants.FieldFormat)]
         internal static ClassificationTypeDefinition FieldType;
@@ -57,5 +58,6 @@ namespace SemanticColorizer
         [Export(typeof(ClassificationTypeDefinition))]
         [Name(Constants.TypeNormalFormat)]
         internal static ClassificationTypeDefinition TypeNormalType;
+#pragma warning restore CS0649
     }
 }
