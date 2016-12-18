@@ -1,10 +1,2 @@
 Microsoft.CodeAnalysis
-Microsoft.CodeAnalysis.Common
-Microsoft.CodeAnalysis.CSharp
 Microsoft.CodeAnalysis.EditorFeatures.Text
-Microsoft.CodeAnalysis.CSharp.Workspaces
-Microsoft.CodeAnalysis.VisualBasic
-Microsoft.CodeAnalysis.VisualBasic.Workspaces
-Microsoft.CodeAnalysis.Workspaces.Common
-System.Collections.Immutable
-System.Reflection.Metadata
