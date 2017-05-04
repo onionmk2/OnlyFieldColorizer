@@ -1,14 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
 <PackageManifest Version="2.0.0" xmlns="http://schemas.microsoft.com/developer/vsx-schema/2011" xmlns:d="http://schemas.microsoft.com/developer/vsx-schema-design/2011">
   <Metadata>
-    <Identity Id="SemanticColorizer..675719A2-3029-4ADD-8A0C-912336B31716" Version="1.2.1" Language="en-US" Publisher="onionmk2" />
-    <DisplayName>SemanticColorizerOnlyFieldColor</DisplayName>
-    <Description xml:space="preserve">A semantic syntax classifier extension based on Roslyn for C# and Visual Basic.</Description>
-    <MoreInfo>https://github.com/hicknhack-software/semantic-colorizer</MoreInfo>
+    <Identity Id="MemberVariableColorizer" Version="0.1.0" Language="en-US" Publisher="onionmk2" />
+    <DisplayName>MemberVariableColorizer</DisplayName>
+    <Description xml:space="preserve">change color of member variable
+
+Original is https://github.com/hicknhack-software/semantic-colorizer.</Description>
+    <MoreInfo>https://github.com/onionmk2/MemberVariableColorizer</MoreInfo>
     <License>LICENSE.txt</License>
     <ReleaseNotes>ReleaseNotes.txt</ReleaseNotes>
-    <Icon>rainbow.png</Icon>
-    <PreviewImage>SemanticColorizerExample.png</PreviewImage>
     <Tags>Semantic Syntax Highlighting Color</Tags>
   </Metadata>
   <Installation>
